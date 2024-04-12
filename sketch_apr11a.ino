@@ -1,23 +1,59 @@
 #include <DHT.h> // ต้องนำเข้าไลบรารี DHT ก่อนใช้งาน
 
-DHT dht(9, DHT11); // สร้างอ็อบเจกต์ DHT
+int RELAY1 = 11;
 
+int RELAY2 = 12;
+
+ 
+
+int delayValue = 1000;
+
+ 
+// SET UP 
+// HIGH relay 1 ,2
 void setup() {
-  dht.begin(); // เริ่มต้นใช้งานเซ็นเซอร์ DHT
-  delay(2000);
 
-  Serial.begin(115200);
+  pinMode(RELAY1, OUTPUT);
+
+  pinMode(RELAY2, OUTPUT); 
+
+  digitalWrite(RELAY1, HIGH);
+
+  digitalWrite(RELAY2, HIGH);
+
+  // PORT 9600
+   Serial.begin(9600);
+
 }
 
+// LOOP  delay 1000
+// โค้ดนี้จะสลับการเปิด-ปิดไฟของ RELAY1 และ RELAY2 ทุกๆ 1 วินาที 
 void loop() {
-  float temp = dht.readTemperature();
-  float humidity = dht.readHumidity();
-  Serial.print("Temp: ");
-  Serial.print(temp);
-  Serial.println(" C"); // ขึ้นบรรทัดใหม่หลังจากการแสดงอุณหภูมิ
-  Serial.print("Humidity: ");
-  Serial.print(humidity);
-  Serial.println(" %"); // ขึ้นบรรทัดใหม่หลังจากการแสดงความชื้น
 
-  delay(10000);
+  digitalWrite(RELAY1, LOW);
+
+  Serial.println("RELAY1 ON");
+
+  delay(delayValue);
+
+ 
+
+  digitalWrite(RELAY1, HIGH);
+
+  Serial.println("RELAY1 OFF");
+
+ 
+
+  digitalWrite(RELAY2, LOW);
+
+  Serial.println("RELAY2 ON");
+
+  delay(delayValue);
+
+  
+
+  digitalWrite(RELAY2, HIGH);
+
+  Serial.println("RELAY2 OFF");
+
 }
